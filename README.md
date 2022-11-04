@@ -7,4 +7,4 @@ This project helps you test your general level of culture. There are various que
 Here is a screeshot of Web-Page:
 ![Screenshot of my page](assets/img/ss.png)
 
-Here is the link of Web-Page:
+Here is the link of Web-Page: https://mramazant.github.io/Code-Quiz/
