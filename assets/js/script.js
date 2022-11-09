@@ -4,10 +4,12 @@ var container = document.querySelector("#container")
 var highscoreBtn = document.querySelector ("#highscoreBtn");
 var startBtn = document.querySelector("#startBtn");
 var submitForm = document.querySelector("#submit")
-var submitButton = document.querySelector("#submit")
+var submitButton = document.querySelector("#submit-initials")
+var submitName = document.querySelector("#submitBtn")
 var highscoreRow = document.querySelector("#scoreRow")
 var scoreRow = document.querySelector("#scoreRow1")
 var highscoreSection = document.querySelector("#highscores")
+var quizContainer = document.querySelector("#quiz-container")
 
 scoreRow.style.display = "none"
 //function for text, choices, answer
@@ -163,7 +165,7 @@ function setTime() {
     var timeEl = document.getElementById("timer");
     if(secondsLeft === 0 || secondsLeft < 0 ){
     timeEl.style.display = "none"
-    score.style.display = "flex"
+    // score.style.display = "flex"
     questionEl.style.display = "none"
     submitForm.style.display = "flex"
     container.classList.remove("hide")
@@ -171,7 +173,7 @@ function setTime() {
     scoreRow.style.display = "flex" 
     startBtn.style.display = "flex"
     highscoreSection.style.display = "flex"
-        
+    quizContainer.style.display = "none"   
         showScore();
      
     }
@@ -200,10 +202,10 @@ highscoreBtn.addEventListener("click", function(){
     scoreRow.style.display = "flex"
 })
 
-var info1 = $("#submitButton");
-info1.on("click", function(){
-  localStorage.setItem("highscore1", $(".highscores1").val());
-})
+// var info1 = $("#submitButton");
+// info1.on("click", function(){
+//   localStorage.setItem("highscore1", $(".highscores1").val());
+// })
 
 
 
