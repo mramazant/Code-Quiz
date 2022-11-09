@@ -1,31 +1,43 @@
+var buttons = document.querySelector("#buttons")
+var questionEl =  document.querySelector('#question');
+var container = document.querySelector("#container")
+var highscoreBtn = document.querySelector ("#highscoreBtn");
+var startBtn = document.querySelector("#startBtn");
+var submitForm = document.querySelector("#submit")
+var submitButton = document.querySelector("#submit")
+var highscoreRow = document.querySelector("#scoreRow")
+var scoreRow = document.querySelector("#scoreRow1")
+var highscoreSection = document.querySelector("#highscores")
+
+scoreRow.style.display = "none"
 //function for text, choices, answer
-function  question (text, choices, answer) {
+function  Question (text, choices, answer) {
     this.text = text;
     this.choices = choices;
     this.answer = answer;
 }
 
 //if choice is the answer, gives true
-question.prototype.checkAnswer = function(answer){
+Question.prototype.checkAnswer = function(answer){
     return this.answer === answer;
 }
 
 //score and questions are 0 at the beginning
-function quiz(questions){
+function Quiz(questions){
     this.questions = questions;
     this.score = 0;
     this.questionIndex = 0;
 }
 //get questions from the above function
-quiz.prototype.getQuestion = function(){
-    return this.questions[this.questionIndex];
+Quiz.prototype.getQuestion = function(){
+    return this.questions[this.questionIndex]; 
 }
 
 //next question and score
-quiz.prototype.isFinish = function(){
+Quiz.prototype.isFinish = function(){
     return this.questions.length === this.questionIndex;
 } 
-quiz.prototype.guess = function(answer){
+Quiz.prototype.guess = function(answer){
     var question = this.getQuestion();
 
     if(question.checkAnswer(answer)){
@@ -34,65 +46,66 @@ quiz.prototype.guess = function(answer){
     this.questionIndex++;
 }
 //decleration of questions and answers
-var q1 = new question("What is the most populated country in the world?", 
+var q1 = new Question("What is the most populated country in the world?", 
 ["USA", "China", "Russia", "Germany", "China"], "China")
 
-var q2 = new question("What is the most populated city in the world?", 
+var q2 = new Question("What is the most populated city in the world?", 
 ["Istanbul", "Paris", "Tokyo", "Shanghai"], "Tokyo")
 
-var q3 = new question("What is the capital of the European Union?", 
+var q3 = new Question("What is the capital of the European Union?", 
 ["Berlin", "Brussels", "Amsterdam", "London"], "Brussels")
 
-var q4 = new question("What is the most common surname in the United States?",
+var q4 = new Question("What is the most common surname in the United States?",
 ["Smith", "Johnson", "Miller", "Jones"], "Smith")
 
-var q5 = new question("How many minutes are in a full week?",
+var q5 = new Question("How many minutes are in a full week?",
 ["960", "720", "1080", "1260"], "1080")
 
-var q6 = new question("What car manufacturer had the highest revenue in 2020?",
+var q6 = new Question("What car manufacturer had the highest revenue in 2020?",
 ["Volkswagen", "Toyota", "Honda", "Mercedes-Benz",], "Volkswagen")
 
-var q7 = new question("How many elements are in the periodic table?",
+var q7 = new Question("How many elements are in the periodic table?",
 ["106", "112", "118", "124"], "118")
 
-var q8 = new question("Which city connects two continents?",
+var q8 = new Question("Which city connects two continents?",
 ["Rome", "Paris", "London", "Istanbul"], "Istanbul")
 
-var q9 = new question("Which planet has the most moons?",
+var q9 = new Question("Which planet has the most moons?",
 ["Saturn", "Earth", "Jupiter", "Mars"], "Saturn")
 
-var q10 = new question("What country has won the most World Cups?",
+var q10 = new Question("What country has won the most World Cups?",
 ["Germany", "Brazil", "Mexico", "Turkey"], "Brazil")
 
-var q11 = new question("What software company is headquartered in Redmond, Washington?",
+var q11 = new Question("What software company is headquartered in Redmond, Washington?",
 ["Microsoft", "Apple", "IBM", "Adobe"], "Microsoft")
 
-var q12 = new question("What artist has the most streams on Spotify?",
+var q12 = new Question("What artist has the most streams on Spotify?",
 ["Jay-Z", "Ariana Grande", "Bad Bunny", "Drake"], "Drake")
 
-var q13 = new question("Where did sushi originate?",
+var q13 = new Question("Where did sushi originate?",
 ["Japan", "South Korea", "North Korea", "China"], "China")
 
-var q14 = new question("What country drinks the most coffee?",
+var q14 = new Question("What country drinks the most coffee?",
 ["Norway", "Finland", "Sweden", "Switzerland"], "Finland")
 
-var q15 = new question("Where is Angel Falls, the world’s largest waterfall, located?",
+var q15 = new Question("Where is Angel Falls, the world’s largest waterfall, located?",
 ["United States", "Ireland", "Venezuela", "Bermuda"], "Venezuela")
 //Variable decleration
 var questions = [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15]
-var quiz = new quiz(questions);
+var quiz = new Quiz(questions);
 //quiz start
 loadQuestion();
 function loadQuestion(){
     if(quiz.isFinish()){
         showScore();
+        askForInitials();
     }else{
         var question = quiz.getQuestion(); 
         var choices = question.choices;
         //showing question
-        document.querySelector('#question').textContent = question.text;
+       questionEl.textContent = question?.text;
         //answers content for every button
-        for(var i=0; i<choices.length; i++){
+        for(var i=0; i<choices.length - 1; i++){
             var element = document.querySelector("#choice"+i);
             element.innerHTML = choices[i];
 
@@ -103,7 +116,7 @@ function loadQuestion(){
 }
 // load next question
 function guess(id,guess){
-    var btn = document.getElementById(id);
+    var btn = document.querySelector("#" + id);
     btn.onclick = function(){
         quiz.guess(guess);
         loadQuestion();
@@ -114,7 +127,22 @@ function guess(id,guess){
 function showScore(){
     var html = quiz.score;
     document.querySelector(".card-body").innerHTML= "Your Score is " + html;
-    document.querySelector("higscoreBtn") = highscoreBtn
+    document.querySelector("#highscoreInitials").onclick = function() {
+
+    }
+    document.querySelector("#highscoreBtn").onclick = function() {
+
+    }
+
+}
+
+function askForInitials() {
+    document.querySelector("#ask-initials").classList.remove("hide");
+    document.querySelector("#submit-initials").onclick = function() {
+     var initials = document.querySelector("#ask-initials-input").val;
+     console.log(initials);
+
+    }
 
 }
 //question number of total qustion length
@@ -125,18 +153,60 @@ function showProgress(){
      + questionNumber + "of" + totalQuestion;
 }
 //countdown, but it doesnt work. This work is not yet finish. I will fix and continue it next day
-var timeEl = document.getElementById("#timer")
-var container = getElementByClass("#container")
-var highscoreBtn = getElementById("#higscoreBtn");
-var startBtn = document.getElementById("#startBtn");
+var timeEl = document.querySelector("#timer")
+
+
 var secondsLeft = 20;
-highscoreBtn.onclick = function setTime(){
-    
+
+function setTime() {
     secondsLeft--;
+    var timeEl = document.getElementById("timer");
+    if(secondsLeft === 0 || secondsLeft < 0 ){
+    timeEl.style.display = "none"
+    score.style.display = "flex"
+    questionEl.style.display = "none"
+    submitForm.style.display = "flex"
+    container.classList.remove("hide")
+    submitButton.style.display = "flex"
+    scoreRow.style.display = "flex" 
+    startBtn.style.display = "flex"
+    highscoreSection.style.display = "flex"
+        
+        showScore();
+     
+    }
     timeEl.textContent = secondsLeft + "seconds left for answer"
-    setInterval(setTime, 1000);
-    showScore();
-    
 }
-setTime();
+
+//**************************************************************** */
+startBtn.addEventListener("click", function(){
+    submitForm.style.display = "none"
+    container.classList.remove("hide")
+    container.style.display = "block"
+    submitButton.style.display = "none"
+    scoreRow.style.display = "none" 
+    startBtn.style.display = "none"
+    highscoreSection.style.display = "none"
+    setInterval(setTime, 1000);
+
+    
+    
+}, 1000)
+
+
+highscoreBtn.addEventListener("click", function(){
+    container.style.display = "none"
+    startBtn.style.display = "none"
+    scoreRow.style.display = "flex"
+})
+
+var info1 = $("#submitButton");
+info1.on("click", function(){
+  localStorage.setItem("highscore1", $(".highscores1").val());
+})
+
+
+
+
+
 
