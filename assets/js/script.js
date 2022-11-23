@@ -121,6 +121,11 @@ var quiz = new Quiz(questions);
 loadQuestion();
 function loadQuestion(){
     if(quiz.isFinish()){
+        submitButton.style.display = "flex"
+        timeEl.style.display = "none"
+        highscoreBtn.style.display = "flex"
+        highscoreSection.style.display = "flex"
+        questionEl.innerHTML = ""
         showScore();
         askForInitials();
     }else{
