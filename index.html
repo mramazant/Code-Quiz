@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,73 +8,73 @@
     <title>Document</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
 </head>
 
-<h1 class="welcome"><strong>  Welcome to Code-Quiz Challenge </strong></h1>
+<h1 class="welcome"><strong> Welcome to Code-Quiz Challenge </strong></h1>
 <hr>
 
 <h1 id="timer" style="text-align:center;"></h1>
 <button id="startBtn">Start</button>
 <hr>
+
 <body>
-<section id="container" class="hide">
-   
-    <div class="row">
-        <div class="col-12">
-            <div class="card" id="quiz-container">
-                <div class="card-header"> 
-                    <h5 id="question"></h5>
-                    <div id="ask-initials" class="hide">
-                        <input id="ask-initials-input" type="text" placeholder="Initials">
-                        <button id="submit-initials">Submit high score</button>
-                    </div>
-                </div> <!-- ends card-header -->
-                <div class="card-body">
-                    <hr>
-                    <div id="buttons">
-                        <button id="btn0" class="btn">
-                            <span id="choice0">   
-                            </span>
-                        </button>
-                        <button id="btn1" class="btn">
-                            <span id="choice1">
-                            </span>
-                        </button>
-                        <button id="btn2" class="btn">
-                            <span id="choice2">
-                            </span>
-                        </button>
-                        <button id="btn3" class="btn">
-                            <span id="choice3">
-                            </span>
-                        </button>
-                    </div> <!-- end buttons -->
-                    <div id="submit">
-                        <input type="text" id="scoreInput" placeholder="Your Name">
-                        <span><button id="submitBtn">Submit</button></span>
-                    </div>
-                </div> <!-- ends card body-->
-                <div id="progress" class="card-footer"></div>
-            </div> <!-- ends entire card -->
-        </div> <!-- end column -->
-    </div> <!-- ends row -->
-</section> <!-- ends container -->
+    <section id="container" class="hide">
 
-<section id="highscores">
-    <h1>Highscores</h1>
-    <hr><br>
-    <button id="highscoreBtn">Get High Scores</button>
-    <hr><br>
-    <ul id="highscoreContainer">
-    </ul>
+        <div class="row">
+            <div class="col-12">
+                <div class="card" id="quiz-container">
+                    <div class="card-header">
+                        <h5 id="question"></h5>
+                        <div id="ask-initials" class="hide">
+                            <input id="ask-initials-input" type="text" placeholder="Initials">
+                            <button id="submit-initials">Submit high score</button>
+                        </div>
+                    </div> <!-- ends card-header -->
+                    <div class="card-body">
+                        <hr>
+                        <div id="buttons">
+                            <button id="btn0" class="btn">
+                                <span id="choice0">
+                                </span>
+                            </button>
+                            <button id="btn1" class="btn">
+                                <span id="choice1">
+                                </span>
+                            </button>
+                            <button id="btn2" class="btn">
+                                <span id="choice2">
+                                </span>
+                            </button>
+                            <button id="btn3" class="btn">
+                                <span id="choice3">
+                                </span>
+                            </button>
+                        </div> <!-- end buttons -->
+                        <div id="submit">
+                            <input type="text" id="scoreInput" placeholder="Your Name">
+                            <span><button id="submitBtn">Submit</button></span>
+                        </div>
+                    </div> <!-- ends card body-->
+                    <div id="progress" class="card-footer"></div>
+                </div> <!-- ends entire card -->
+            </div> <!-- end column -->
+        </div> <!-- ends row -->
+    </section> <!-- ends container -->
 
-</section>
-<div id="scoreRow1">
-    <ul id="highscore1"><p></p></ul>
-    <textarea name="" id="highscores1" cols="30" rows="5"></textarea>
-</div>
-<script src="assets/js/script.js"></script>
+    <section id="highscores">
+        <h1>Highscores</h1>
+        <hr><br>
+        <button id="highscoreBtn">Get High Scores</button>
+        <hr><br>
+        <ul id="highscoreContainer">
+        </ul>
+
+    </section>
+    <div id="scoreRow1">
+    </div>
+    <script src="assets/js/script.js"></script>
 </body>
+
 </html>

@@ -1,3 +1,4 @@
+//Decleration of variables
 var buttons = document.querySelector("#buttons")
 var questionEl =  document.querySelector('#question');
 var container = document.querySelector("#container")
@@ -11,20 +12,27 @@ var scoreRow = document.querySelector("#scoreRow1")
 var highscoreSection = document.querySelector("#highscores")
 var quizContainer = document.querySelector("#quiz-container")
 var askInitials = document.querySelector("#ask-initials")
-var container = document.querySelector("#highscoreContainer")
 var highscores = []
-//highscores = localStorage.getItem("highScore1");
 
-
+//function to get highscore
 function getHighScores(){
+    scoreRow.innerHTML = ""
     var list = document.createElement("ul");
-    // highscores = localStorage.getItem("highScore1");
-    // list.textContent = highscores
-    //let highScore = localStorage.getItem("highscores");
-    //console.log(highScore);
-    list.textContent = highscores;
-    //scoreRow.textContent = highScore
-    //scoreRow.textContent = highscores
+    highscores = localStorage.getItem("highscore");
+    if (highscores == null){
+        highscores = [];
+    } else{
+        highscores = JSON.parse(highscores)
+    }
+    for (i = 0; i < highscores.length; i++){
+        var listItem = document.createElement("li");
+        var score = JSON.parse(highscores[i])
+        listItem.innerHTML = `Username: ${score.userName}, Score: ${score.score}`
+        console.log(score)
+        console.log(highscores[i])
+        list.appendChild(listItem);
+    }
+    scoreRow.appendChild(list);
 }
 scoreRow.style.display = "none"
 //function for text, choices, answer
@@ -33,12 +41,10 @@ function  Question (text, choices, answer) {
     this.choices = choices;
     this.answer = answer;
 }
-
 //if choice is the answer, gives true
 Question.prototype.checkAnswer = function(answer){
     return this.answer === answer;
 }
-
 //score and questions are 0 at the beginning
 function Quiz(questions){
     this.questions = questions;
@@ -49,7 +55,6 @@ function Quiz(questions){
 Quiz.prototype.getQuestion = function(){
     return this.questions[this.questionIndex]; 
 }
-
 //next question and score
 Quiz.prototype.isFinish = function(){
     return this.questions.length === this.questionIndex;
@@ -59,16 +64,14 @@ Quiz.prototype.guess = function(answer){
 
     if(question.checkAnswer(answer)){
         this.score++;
+    }else {
+        secondsLeft = secondsLeft - 5;
     }
     this.questionIndex++;
-    // if (this.questionIndex > this.questions.length){
-    //     questionEl.textContent = "";
-
-   // }
 }
 //decleration of questions and answers
 var q1 = new Question("What is the most populated country in the world?", 
-["USA", "China", "Russia", "Germany"], "China")
+["USA", "China", "Russia", "Germany",], "China")
 
 var q2 = new Question("What is the most populated city in the world?", 
 ["Istanbul", "Paris", "Tokyo", "Shanghai"], "Tokyo")
@@ -118,10 +121,8 @@ var quiz = new Quiz(questions);
 loadQuestion();
 function loadQuestion(){
     if(quiz.isFinish()){
-        questionEl.textContent = "Please enter your name"
-        // showScore();
+        showScore();
         askForInitials();
-        endQuiz();
     }else{
         var question = quiz.getQuestion(); 
         var choices = question.choices;
@@ -143,7 +144,6 @@ function guess(id,guess){
     btn.onclick = function(){
         quiz.guess(guess);
         loadQuestion();
-
     }
 }
 //showing score
@@ -151,62 +151,33 @@ function showScore(){
     var html = quiz.score;
     document.querySelector(".card-body").innerHTML= "Your Score is " + html;
     askForInitials();
-    // document.querySelector("#submit-initials").onclick = function() {
-    //     console.log(quiz.score)
-    // localStorage.setItem("highscore1", $(".highscores1").val());
-    // }
-    document.querySelector("#highscoreBtn").onclick = function() {
-    //getHighScores();
-    getLocalStorage();
-    }
-
 }
-
-function setLocalStorage(highscores){
-    
-    var score;
-    score = localStorage.getItem("highscores")   
-    console.log(score)
-
-    if (score == null){
-        score = [];
-    } else{
-        score = JSON.parse(score)
+document.querySelector("#highscoreBtn").onclick = function() {
+    getHighScores();
     }
-    score.push(highscores);
-    localStorage.setItem("highscores", JSON.stringify(score))
-    console.log(score)
-}
-function getLocalStorage() {
-        var score;
-    score = localStorage.getItem("highscores") 
-    if (score == null){
-        score = [];
-    } else{
-        score = JSON.parse(score)
-    }
-    console.log(score)
-    for (i = 0; i < score.length; i++){
-        var scoreList = document.createElement("li");
-        scoreList.textContent = score[i].userName
-        container.appendChild(scoreList)
-        
-    }
-}
+    //function for Initials asking
 function askForInitials() {
     askInitials.classList.remove("hide");
     submitButton.onclick = function() {
      var initials = document.querySelector("#ask-initials-input").value;
      console.log(initials, quiz.score);
      let userScore = JSON.stringify({userName: initials, score: quiz.score});
-     //highscores.push(userScore)
-    //localStorage.setItem("highscores", highscores);
-    setLocalStorage(userScore);
-
+     highscores.push(userScore)
+        setLocalStorage(userScore);
     }
-    
-
 }
+//function for stting the score in LocalStorage
+function setLocalStorage(score){    
+    var highscores;
+    highscores = localStorage.getItem("highscore")   
+    if (highscores == null){
+        highscores = [];
+    } else{
+        highscores = JSON.parse(highscores)
+    }
+    highscores.push(score);
+    localStorage.setItem("highscore", JSON.stringify(highscores))   
+    }
 //question number of total qustion length
 function showProgress(){
     var totalQuestion = quiz.questions.length;
@@ -214,49 +185,26 @@ function showProgress(){
     document.querySelector("#progress").innerHTML = "Question "
      + questionNumber + "of" + totalQuestion;
 }
-//countdown, but it doesnt work. This work is not yet finish. I will fix and continue it next day
+//countdown
 var timeEl = document.querySelector("#timer")
-
-
-var secondsLeft = 70;
-
+var secondsLeft = 60;
 function setTime() {
     secondsLeft--;
     var timeEl = document.getElementById("timer");
     if(secondsLeft === 0 || secondsLeft < 0 ){
-    // timeEl.style.display = "none"
-    // // score.style.display = "flex"
-    // questionEl.style.display = "none"
-    // submitForm.style.display = "flex"
-    // container.classList.remove("hide")
-    // // askInitials.classList.remove("hide")
-    // submitButton.style.display = "flex"
-    // scoreRow.style.display = "flex" 
-    // startBtn.style.display = "none"
-    // highscoreSection.style.display = "flex"
-    // //quizContainer.style.display = "none"   
-    //     showScore();
-     endQuiz();
-    }
-    timeEl.textContent = secondsLeft + "seconds left for answer"
-}
-function endQuiz() {
     timeEl.style.display = "none"
-    // score.style.display = "flex"
     questionEl.style.display = "none"
     submitForm.style.display = "flex"
     container.classList.remove("hide")
-    // askInitials.classList.remove("hide")
     submitButton.style.display = "flex"
     scoreRow.style.display = "flex" 
     startBtn.style.display = "none"
-    highscoreSection.style.display = "flex"
-    //quizContainer.style.display = "none"   
+    highscoreSection.style.display = "flex"  
         showScore();
-        
+    }
+    timeEl.textContent = secondsLeft + "seconds left for answer"
 }
-
-//**************************************************************** */
+// function for after start button click
 startBtn.addEventListener("click", function(){
     submitForm.style.display = "none"
     container.classList.remove("hide")
@@ -266,23 +214,11 @@ startBtn.addEventListener("click", function(){
     startBtn.style.display = "none"
     highscoreSection.style.display = "none"
     setInterval(setTime, 1000);
-
-    
-    
 }, 1000)
-
-
+//function for higscore button click
 highscoreBtn.addEventListener("click", function(){
     container.style.display = "none"
     startBtn.style.display = "none"
     scoreRow.style.display = "flex"
-    highscores = localStorage.getItem("highscores");
-    
+    highscores = localStorage.getItem("highscore");   
 })
-
-
-
-
-
-
-
